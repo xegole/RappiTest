@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  RappiTest
+
+  Created by Diego Leon on 2/7/17.
+  Copyright © 2017 Diego Leon. All rights reserved.
+*/
+
+
+"categories" = "Cargando categorias";
+"title_categories" = "Categorias";
+"dialog_ok" = "Aceptar";
+"dialog_message" = "No tiene conexión a internet";
+"dialog_title" = "Problema internet";
