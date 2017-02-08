@@ -25,7 +25,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         self.title = "title_categories".localized
         navigationController?.navigationBar.barTintColor = UIColor.gray
         
-        if Reachability.isConnectedToNetwork() == false
+        if Reachability.isConnectedToNetwork() == true
         {
                     KVNProgress.show(withStatus: "categories".localized)
                     Categories.getCategories { (entries) in

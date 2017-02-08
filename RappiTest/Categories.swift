@@ -31,6 +31,7 @@ class Categories: NSObject {
             var tempArray = [Entry]()
             
             if let responseReports = category["entry"].array{
+                deleteDb()
                 for attrs in responseReports{
                     let entry = Entry(json: attrs)
                     saveDb(entryObj: entry)
@@ -42,6 +43,27 @@ class Categories: NSObject {
         }
     }
     
+    static func deleteDb(){
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<EntryDB> = EntryDB.fetchRequest()
+        if let result = try? managedContext.fetch(fetchRequest) {
+            for object in result {
+                managedContext.delete(object)
+            }
+        }
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
     static func saveDb(entryObj: Entry) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -49,7 +71,6 @@ class Categories: NSObject {
         
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "EntryDB",in: managedContext)!
-        
         
         let entry = NSManagedObject(entity: entity,insertInto: managedContext)
         entry.setValue(entryObj.name, forKeyPath: "name")
